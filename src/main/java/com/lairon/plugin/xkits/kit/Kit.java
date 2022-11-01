@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.Objects;
+
 @Data
 @Builder
 public class Kit {
@@ -37,4 +39,14 @@ public class Kit {
      */
     @NonNull
     private KitItemsHolder kitItemsHolder;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Kit kit = (Kit) o;
+        return id.equalsIgnoreCase(kit.id);
+    }
+
 }
