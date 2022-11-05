@@ -2,6 +2,7 @@ package com.lairon.plugin.xkits.registry;
 
 import com.lairon.plugin.xkits.exception.registry.KitAlreadyRegisteredException;
 import com.lairon.plugin.xkits.kit.Kit;
+import com.lairon.plugin.xkits.data.KitDataManager;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,7 +15,7 @@ public class KitRegistry {
 
     /**
      * Use to embed your kit into a plugin
-     * If you want to save your kit in config see {@link KitDataLoader#saveKit()}
+     * If you want to save your kit in config see {@link KitDataManager#saveKit(Kit)}
      *
      * @param kit - Kit for registration
      */
