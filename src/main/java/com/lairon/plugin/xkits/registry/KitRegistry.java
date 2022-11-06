@@ -40,6 +40,10 @@ public class KitRegistry {
                 .orElse(null);
     }
 
+    public void clear(){
+        registryKits.clear();
+    }
+
     public List<Kit> getKits(){
         return new ArrayList<>(registryKits);
     }

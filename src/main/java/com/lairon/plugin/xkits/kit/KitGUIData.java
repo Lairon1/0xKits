@@ -5,11 +5,18 @@ import lombok.Data;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Builder
-public class KitGUIData {
+public class KitGUIData implements Cloneable{
+
+    /**
+     * The slot in which the item will lie
+     */
+    @NonNull
+    private int slot;
 
     /**
      * The item that will be displayed if the player has access to this set
@@ -26,7 +33,23 @@ public class KitGUIData {
     @NonNull
     private List<String> displayLoreIfCooldown;
 
+    /**
+     * If the player does not have permission to
+     * take this kit, he will be shown an item from {@link #getDisplayNoPermissionItem()} ()}
+     */
     @NonNull
     private ItemStack displayNoPermissionItem;
 
+
+    @Override
+    public KitGUIData clone() {
+        return KitGUIData
+                .builder()
+                .slot(slot)
+                .displayItem(displayItem.clone())
+                .displayLoreIfAvailable(new ArrayList<>(displayLoreIfAvailable))
+                .displayLoreIfCooldown(new ArrayList<>(displayLoreIfCooldown))
+                .displayNoPermissionItem(displayNoPermissionItem.clone())
+                .build();
+    }
 }

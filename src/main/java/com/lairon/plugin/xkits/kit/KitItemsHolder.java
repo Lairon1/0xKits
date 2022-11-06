@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 @Data
 @Builder
-public class KitItemsHolder {
+public class KitItemsHolder implements Cloneable {
 
     // Armor
     private ItemStack helmet;
@@ -18,4 +18,22 @@ public class KitItemsHolder {
 
     private ItemStack[] inventory;
 
+    @Override
+    protected KitItemsHolder clone() {
+        ItemStack[] cloneInventory = new ItemStack[inventory.length];
+
+        for (int i = 0; i < cloneInventory.length; i++) {
+            cloneInventory[i] = inventory[i] != null ? inventory[i].clone() : null;
+        }
+
+        return KitItemsHolder
+                .builder()
+                .helmet(helmet.clone())
+                .chestplate(chestplate.clone())
+                .leggings(leggings.clone())
+                .boots(boots.clone())
+                .offHand(offHand.clone())
+                .inventory(cloneInventory)
+                .build();
+    }
 }
