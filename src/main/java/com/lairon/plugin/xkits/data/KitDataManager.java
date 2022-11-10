@@ -13,7 +13,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class KitDataManager {
