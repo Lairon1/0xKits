@@ -43,10 +43,11 @@ public class YamlDataProvider implements DataProvider {
     }
 
     @Override
-    public @Nullable AsyncTask<PlayerInfo> loadPlayerInfo(@NonNull String player) {
+    public @Nullable AsyncTask<PlayerInfo> loadPlayerInfo(@NonNull String playerName) {
         return new AsyncTask<>(plugin, () -> {
             try {
                 reloadFiles();
+                String player = playerName.toLowerCase();
                 if (!config.contains(player)) return null;
                 ConfigurationSection section = config.getConfigurationSection(player);
                 HashMap<String, Long> kitsCooldown = new HashMap<>();
@@ -64,7 +65,7 @@ public class YamlDataProvider implements DataProvider {
     public @NonNull AsyncTask<Boolean> savePlayerInfo(@NonNull PlayerInfo playerInfo) {
         return new AsyncTask<>(plugin, () -> {
             try {
-                config.set(playerInfo.getName(), playerInfo.getKitsCooldown());
+                config.set(playerInfo.getName().toLowerCase(), playerInfo.getKitsCooldown());
                 saveFiles();
                 return true;
             } catch (Exception e) {
