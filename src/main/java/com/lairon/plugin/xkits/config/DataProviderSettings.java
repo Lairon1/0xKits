@@ -24,6 +24,6 @@ public class DataProviderSettings extends StorageClass {
 
     @Override
     public String getPath() {
-        return "DataProvider.";
+        return "Settings.DataProvider.";
     }
 }

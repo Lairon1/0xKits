@@ -3,6 +3,7 @@ package com.lairon.plugin.xkits;
 import ch.jalu.injector.Injector;
 import ch.jalu.injector.InjectorBuilder;
 import com.lairon.lairconfig.LairConfig;
+import com.lairon.plugin.xkits.config.DataProviderSettings;
 import com.lairon.plugin.xkits.config.Messages;
 import com.lairon.plugin.xkits.config.Settings;
 import com.lairon.plugin.xkits.data.KitDataManager;
@@ -13,6 +14,8 @@ import com.lairon.plugin.xkits.data.serializer.item.ItemSerializer;
 import com.lairon.plugin.xkits.data.serializer.item.ItemSerializerProvider;
 import com.lairon.plugin.xkits.kit.Kit;
 import com.lairon.plugin.xkits.kit.KitItemsHolder;
+import com.lairon.plugin.xkits.playerdata.DataProvider;
+import com.lairon.plugin.xkits.playerdata.impl.DataProvidersProvider;
 import com.lairon.plugin.xkits.registry.KitRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -47,12 +50,14 @@ public final class KitsPlugin extends JavaPlugin {
 
         Settings settings = injector.getSingleton(Settings.class);
         Messages messages = injector.getSingleton(Messages.class);
+        DataProviderSettings dataProviderSettings = injector.getSingleton(DataProviderSettings.class);
 
         LairConfig config = new LairConfig(getDataFolder() + File.separator + "config.yml");
 
         try {
             config.registerStorageClass(settings);
             config.registerStorageClass(messages);
+            config.registerStorageClass(dataProviderSettings);
             config.reload();
         } catch (Exception | Error throwable) {
             logger.error("An error occurred while reloading the configuration file, fix it and use /kits reload");
@@ -67,6 +72,7 @@ public final class KitsPlugin extends JavaPlugin {
 
         injector.registerProvider(ItemDeserializer.class, ItemDeserializerProvider.class);
         injector.registerProvider(ItemSerializer.class, ItemSerializerProvider.class);
+        injector.registerProvider(DataProvider.class, DataProvidersProvider.class);
 
         injector.getSingleton(KitDeserializer.class);
 
@@ -74,14 +80,7 @@ public final class KitsPlugin extends JavaPlugin {
         dataManager.saveDefaultKitIfExist();
         dataManager.reloadKits();
 
-        List<Kit> kits = kitRegistry.getKits();
-        String[] kitsIDs = new String[kits.size()];
 
-        for (int i = 0; i < kitsIDs.length; i++) {
-            kitsIDs[i] = kits.get(i).getId();
-        }
-
-        logger.info("Registered kits: " + String.join(", ", kitsIDs));
 
     }
 
